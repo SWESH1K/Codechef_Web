@@ -5,3 +5,4 @@ secondaryBackgroundColor="#433a3f"
 textColor="#e59a59"
 [server]
 fileWatcherType = "poll"
+headless = true

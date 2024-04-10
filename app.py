@@ -148,6 +148,7 @@ def Analysis(user_id=None, roll_no=None):
     col2.plotly_chart(fig2)
 
 if __name__ == "__main__":
+
     st.set_page_config(page_title="Codechef-Dashboard", layout="wide", page_icon="codechef_icon.png")
     col1, col2 = st.columns([2,9])
     col2.header("Student Dashboard")
