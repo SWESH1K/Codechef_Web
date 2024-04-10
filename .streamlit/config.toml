@@ -3,3 +3,5 @@ primaryColor="#888870"
 backgroundColor="#1a1a1d"
 secondaryBackgroundColor="#433a3f"
 textColor="#e59a59"
+[server]
+fileWatcherType = "poll"
