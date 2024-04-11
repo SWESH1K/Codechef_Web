@@ -3,6 +3,7 @@ import streamlit as st
 from PIL import Image
 import plotly.graph_objects as go
 import numpy as np
+from trust_score import calculate_trust_score
 
 class Contestant:
     def __init__(self, user_id=None, roll_no=None, df=None):
@@ -33,6 +34,14 @@ class Contestant:
                 "Average Rating": int(self.user_data.rating.mean()),
                 "Average Rank": int(self.user_data["rank"].mean())
             }
+            self.credentials = {
+                "N": len(ratings_list), # Number of contests
+                "P": len(self.user_data[self.user_data['reason'].notna()]), # Number of plagarisms
+                "OA": int(sum(contest_inc) / len(contest_inc)), # Overall Average Increment
+                "PA": sum(contest_inc[-5:])/5 if len(contest_inc) >= 5 else sum(contest_inc)/len(contest_inc), # Past 3 Average Increment
+                "C": ratings_list[-1], # Current rating
+                "A": int(self.user_data.rating.mean()), # Average rating
+            }
 
 class AnalysisTools:
 
@@ -62,7 +71,7 @@ class AnalysisTools:
                 st.subheader("Contest Details")
                 rating = user_row['rating']
                 code = user_row['code']
-                st.metric(label="Latest Rating", value=rating)
+                st.metric(label="Current Rating", value=rating)
                 st.metric(label="Average Rating", value=additional_info['Average Rating'])
                 st.metric(label="Average Increment in Rating", value=additional_info['Average Increase in Rating'])
             # Displaying rank in the latest contest and division in the third column
@@ -140,6 +149,30 @@ class AnalysisTools:
 
         fig.update_layout(title='Rank Analysis', xaxis_title='Code', yaxis_title='Rank')
         return fig
+    
+    @staticmethod
+    def generate_trust_text(credentials):
+
+        scores_dict = calculate_trust_score(credentials)
+        total = scores_dict['total_score']
+
+        # Define the color based on the score range
+        if total >= 90:
+            color = 'green'
+        elif total >= 70:
+            color = 'orange'
+        else:
+            color = 'red'
+        
+        # Generate the highlighted text
+        trust_text = f"<p style='font-size: 28px; font-weight: bold; color: #1a1a1d; background-color: {color}; padding: 10px;'>Trust Score: {total}%</p>"
+        st.markdown(trust_text,unsafe_allow_html=True)
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric(label="Based on number of contests(20%):", value=f"{scores_dict['score1']}%")
+        col2.metric(label="Based on number of plagarisms(50%):", value=f"{scores_dict['score2']}%")
+        col3.metric(label="Based on sudden increase in average increment(15%):", value=f"{scores_dict['score3']}%")
+        col4.metric(label="Based on difference between Current & Average rating(15%):", value=f"{scores_dict['score4']}%")
+        st.subheader("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
 
 
 class Dashboard:
@@ -176,7 +209,9 @@ class Dashboard:
         
         # Display additional info, such as highest rating, average increase in rating, etc.
         AnalysisTools.generate_short_analysis(contestant.user_id, contestant.additional_info)
+        AnalysisTools.generate_trust_text(contestant.credentials)
         # Display the user data.
+        st.subheader("All contests details")
         st.dataframe(contestant.user_data, use_container_width=True, hide_index=True)
         # Generate and display charts
         AnalysisTools.generate_line_chart(contestant.user_data, self.df)
@@ -185,6 +220,7 @@ class Dashboard:
         col1,col2 = st.columns(2)
         col1.plotly_chart(bar_chart, use_container_width=True)
         col2.plotly_chart(pie_chart)
+        
 
 if __name__ == "__main__":
     df = pd.read_excel("contest_details.xlsx")
