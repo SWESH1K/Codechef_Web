@@ -39,7 +39,7 @@ class AnalysisTools:
     @staticmethod
     def generate_short_analysis(user_id, additional_info):
         # Load the specific sheet from the Excel file
-        latest_df = pd.read_excel("contest_details(new format).xlsx", sheet_name="Latest Ratings")
+        latest_df = pd.read_excel("contest_details.xlsx", sheet_name="Latest Ratings")
         colors_to_stars = {"#3366CC": "3⭐", "#1E7D22": "2⭐", "#666666": "1⭐"}
         # Find the row(s) where the user_id matches the given user_id
         matches = latest_df['user_id'] == user_id
@@ -187,6 +187,6 @@ class Dashboard:
         col2.plotly_chart(pie_chart)
 
 if __name__ == "__main__":
-    df = pd.read_excel("contest_details(new format).xlsx")
+    df = pd.read_excel("contest_details.xlsx")
     dashboard = Dashboard(df)
     dashboard.run()
