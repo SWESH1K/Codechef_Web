@@ -182,11 +182,27 @@ class Dashboard:
 
     def run(self):
         st.set_page_config(page_title="Codechef-Dashboard", layout="wide", page_icon="codechef_icon.png")
-        col1, col2 = st.columns([2,9])
+        col1, col2, col3 = st.columns([2,5,1.5])
         col2.header("Student Dashboard")
         col2.subheader("Analyze yourself?")
         logo = Image.open("codechef_logo.png")
         col1.image(logo, width=230)
+
+        # Adding Contact Me button style
+        contact_button = """
+        <a href="https://t.me/sweshik" target="_blank">
+            <button style='margin: 10px; padding: 10px 20px; font-size: 20px; color: #1a1a1d; background-color: #e59a59; border: none; border-radius: 10px; cursor: pointer;'>
+                Contact Me
+            </button>
+        </a>
+        """
+
+        ## Dummpy markdowns to allign the button to bottom.
+        col3.markdown(" ")
+        col3.markdown(" ")
+        col3.markdown(" ")
+        col3.markdown(" ")
+        col3.markdown(f"{contact_button}", unsafe_allow_html=True)
         
         user_input = st.text_input(label="Codechef id or Roll No", placeholder="user_id", key="Key")
         if user_input:
