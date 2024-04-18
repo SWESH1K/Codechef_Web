@@ -49,7 +49,7 @@ class AnalysisTools:
     def generate_short_analysis(user_id, additional_info):
         # Load the specific sheet from the Excel file
         latest_df = pd.read_excel("contest_details.xlsx", sheet_name="Latest Ratings")
-        colors_to_stars = {"#3366CC": "3⭐", "#1E7D22": "2⭐", "#666666": "1⭐"}
+        colors_to_stars = {"#FFBF00": "5⭐","#684273": "4⭐","#3366CC": "3⭐", "#1E7D22": "2⭐", "#666666": "1⭐"}
         # Find the row(s) where the user_id matches the given user_id
         matches = latest_df['user_id'] == user_id
         # Use np.where to find the indices of the matching row(s)
