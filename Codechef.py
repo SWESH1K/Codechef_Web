@@ -5,6 +5,7 @@ import os
 import pandas as pd  # Import pandas for data manipulation
 import csv
 from latest_data_extractor import save_latest_ratings
+from two_three_stars import save_high_ratings
 global successfull,unsuccessfull
 successfull=0
 unsuccessfull=0
@@ -58,7 +59,7 @@ class Codechef:
     def highest_rating(self):
         return print("Highest rating: ", max([int(rating["rating"]) for rating in self.ratings]))
 
-    def save_to_excel(self, filename="contest_details.xlsx"):
+    def save_to_excel(self, filename="contest_details(staters 130).xlsx"):
         if len(self.ratings) == 0:
             return
 
@@ -122,8 +123,8 @@ def load_csv():
             # Check if the row has at least 2 columns
             if len(row) >= 2:
                 # Append the element from the second column to the list
-                if len(row[1])>0:
-                    second_column_data[row[1]] = row[0]
+                if len(row[5])>0:
+                    second_column_data[row[5]] = row[0]
         global total
         total = len(second_column_data)           
     for user, roll in second_column_data.items():
@@ -141,7 +142,7 @@ def main():
 
     global csv_file_path,second_column_data,counts,total
 
-    # Path to your CSV file
+    # # Path to your CSV file
     csv_file_path = 'ranking.csv'
 
     # List to store the elements of the second column
@@ -150,6 +151,7 @@ def main():
     counts=0
     load_csv()
     save_latest_ratings() # Add an extra sheet that contains the latest rating of each student.
+    save_high_ratings()
     end = time.time()
     print("Total username:",total)
     print("Correct users:",successfull)

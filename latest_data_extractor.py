@@ -1,6 +1,6 @@
 import pandas as pd
 
-def save_latest_ratings(file_name="contest_details.xlsx", new_sheet_name="Latest Ratings"):
+def save_latest_ratings(file_name="contest_details(staters 130).xlsx", new_sheet_name="Latest Ratings"):
     # Read the existing Excel file
     df = pd.read_excel(file_name)
     
