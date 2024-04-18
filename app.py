@@ -112,12 +112,14 @@ class AnalysisTools:
 
         # Average rating trace
         avg_rating_data = pd.DataFrame({'code': list(average_ratings.keys()), 'average_rating': list(average_ratings.values())})
-        fig.add_trace(go.Scatter(x=avg_rating_data['code'], y=avg_rating_data['average_rating'], mode='lines+markers', name='Average Rating', line=dict(color='firebrick', width=2)))
+        fig.add_trace(go.Scatter(x=avg_rating_data['code'], y=avg_rating_data['average_rating'], mode='lines+markers', name='Others Average Rating', line=dict(color='firebrick', width=2)))
 
         # Background rating bands
         fig.add_hrect(y0=min(min(user_data['rating']), min(average_ratings.values())), y1=1399, line_width=0, fillcolor="gray", opacity=0.2)
         fig.add_hrect(y0=1400, y1=1600, line_width=0, fillcolor="green", opacity=0.2)
         fig.add_hrect(y0=1600, y1=1800, line_width=0, fillcolor="blue", opacity=0.2)
+        fig.add_hrect(y0=1800, y1=2000, line_width=0, fillcolor="purple", opacity=0.2)
+        fig.add_hrect(y0=2000, y1=2200, line_width=0, fillcolor="yellow", opacity=0.2)
 
         # Chart layout settings
         fig.update_layout(title='Rating Analysis', xaxis_title='Code', yaxis_title='Rating', height=800)
@@ -126,7 +128,7 @@ class AnalysisTools:
 
     @staticmethod
     def generate_pie_chart(user_data):
-        colors_dict = {"#666666": "Division-4 (1Star)", "#1E7D22": "Division-3 (2Star)", "#3366CC": "Division-2 (3Star)"}
+        colors_dict = {"#666666": "Division-4 (1Star)", "#1E7D22": "Division-3 (2Star)", "#3366CC": "Division-2 (3Star)","#684273": "Division-2 (4Star)","#FFBF00": "Division-1 (5Star and above)"}
         colors_list = {}
         for color in set(user_data.color):
             colors_list[colors_dict[color]] = list(user_data.color).count(color)
@@ -145,7 +147,7 @@ class AnalysisTools:
 
         fig = go.Figure()
         fig.add_trace(go.Bar(x=user_data['code'], y=user_data['rank'], name=f'{max(user_data.user_id)} Rank', marker_color="#FF652F"))
-        fig.add_trace(go.Bar(x=user_data['code'], y=average_ranks['rank'], name='Average Rank', marker_color="lightblue"))
+        fig.add_trace(go.Bar(x=user_data['code'], y=average_ranks['rank'], name='Others Average Rank', marker_color="lightblue"))
 
         fig.update_layout(title='Rank Analysis', xaxis_title='Code', yaxis_title='Rank')
         return fig
