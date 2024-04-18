@@ -193,7 +193,7 @@ class Dashboard:
         # Adding Contact Me button style
         contact_button = """
         <a href="https://t.me/sweshik" target="_blank">
-            <button style='margin: 10px; padding: 10px 20px; font-size: 20px; color: #1a1a1d; background-color: #e59a59; border: none; border-radius: 10px; cursor: pointer;'>
+            <button style='margin: 10px; padding: 10px 20px; font-size: 20px; color: #1a1a1d; background-color: orange; border: none; border-radius: 10px; cursor: pointer;'>
                 Contact Me
             </button>
         </a>
