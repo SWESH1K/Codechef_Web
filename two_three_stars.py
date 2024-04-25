@@ -1,6 +1,6 @@
 import pandas as pd
 
-def save_high_ratings(file_name="contest_details(staters 130).xlsx", new_sheet_name="2 star and above", min_rating=1400):
+def save_high_ratings(file_name="contest_details(staters 131).xlsx", new_sheet_name="2 star and above", min_rating=1400):
     # Read the existing Excel file
     df = pd.read_excel(file_name, sheet_name="Latest Ratings")
     # Colors to stars dict

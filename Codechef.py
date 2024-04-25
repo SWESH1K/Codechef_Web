@@ -59,7 +59,7 @@ class Codechef:
     def highest_rating(self):
         return print("Highest rating: ", max([int(rating["rating"]) for rating in self.ratings]))
 
-    def save_to_excel(self, filename="contest_details(staters 130).xlsx"):
+    def save_to_excel(self, filename="contest_details(staters 131).xlsx"):
         if len(self.ratings) == 0:
             return
 
